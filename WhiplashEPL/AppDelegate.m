@@ -10,13 +10,19 @@
 
 @interface AppDelegate ()
 
-@property (weak) IBOutlet NSWindow *window;
+@property (strong, nonatomic) IBOutlet NSMenu *statusMenu;
+@property (strong, nonatomic) NSStatusItem *statusItem;
+
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [self.statusItem setMenu:self.statusMenu];
+    [self.statusItem setTitle:@"W"];
+    [self.statusItem setHighlightMode:YES];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
