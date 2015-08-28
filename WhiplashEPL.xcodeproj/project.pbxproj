@@ -13,6 +13,7 @@
 		D4086C671B90FBAD00836704 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4086C651B90FBAD00836704 /* MainMenu.xib */; };
 		D4086C731B90FBAD00836704 /* WhiplashEPLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C721B90FBAD00836704 /* WhiplashEPLTests.m */; };
 		D4086C841B91078500836704 /* PrintManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C831B91078500836704 /* PrintManager.m */; };
+		D4086C871B910EA800836704 /* FolderWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C861B910EA800836704 /* FolderWatcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,8 @@
 		D4086C811B9105B700836704 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D4086C821B91078500836704 /* PrintManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintManager.h; sourceTree = "<group>"; };
 		D4086C831B91078500836704 /* PrintManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintManager.m; sourceTree = "<group>"; };
+		D4086C851B910EA800836704 /* FolderWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderWatcher.h; sourceTree = "<group>"; };
+		D4086C861B910EA800836704 /* FolderWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderWatcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,8 @@
 				D4086C5F1B90FBAD00836704 /* AppDelegate.m */,
 				D4086C821B91078500836704 /* PrintManager.h */,
 				D4086C831B91078500836704 /* PrintManager.m */,
+				D4086C851B910EA800836704 /* FolderWatcher.h */,
+				D4086C861B910EA800836704 /* FolderWatcher.m */,
 				D4086C631B90FBAD00836704 /* Images.xcassets */,
 				D4086C651B90FBAD00836704 /* MainMenu.xib */,
 				D4086C5C1B90FBAD00836704 /* Supporting Files */,
@@ -214,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4086C871B910EA800836704 /* FolderWatcher.m in Sources */,
 				D4086C621B90FBAD00836704 /* main.m in Sources */,
 				D4086C841B91078500836704 /* PrintManager.m in Sources */,
 				D4086C601B90FBAD00836704 /* AppDelegate.m in Sources */,

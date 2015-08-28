@@ -44,4 +44,40 @@
     return [printers copy];
 }
 
+
+
+#pragma mark - debug notifications
+-(void)showNotificationWithTitle:(NSString*)title andDetails:(NSString*)details {
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = title;
+    notification.informativeText = details;
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    
+    NSLog(@"%@", details);
+}
+
+
+-(void)shellPrint:(NSString*)fullPath {
+    if ([self.currentPrinterName isEqualToString:@"Debug"]) {
+        [self showNotificationWithTitle:@"PRINT" andDetails:fullPath];
+    } else {
+        NSPipe *pipe = [NSPipe pipe];
+        
+        NSTask *task = [[NSTask alloc] init];
+        task.launchPath = @"/usr/bin/lpr";
+        task.arguments = @[@"-P", self.currentPrinterName, @"-lr", fullPath];
+        task.standardOutput = pipe;
+        
+        [task launch];
+    }
+    
+    
+}
+
+//-(void)trashFile:(NSString*)fullPath {
+//    NSURL *urlPath = [NSURL fileURLWithPath:fullPath isDirectory:NO];
+//    [[NSFileManager defaultManager] trashItemAtURL:urlPath resultingItemURL:nil error:nil];
+//}
+
 @end

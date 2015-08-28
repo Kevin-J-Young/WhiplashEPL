@@ -11,7 +11,10 @@
 @interface PrintManager : NSObject
 
 @property (nonatomic, strong) NSString *currentPrinterName;
+//@property (nonatomic, strong) NSString *printerName;
 
 -(NSArray*)printersAvailable;
+
+-(void)shellPrint:(NSString*)fullPath;
 
 @end

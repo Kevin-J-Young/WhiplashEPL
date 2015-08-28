@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "PrintManager.h"
+#import "FolderWatcher.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,7 @@
 @property (unsafe_unretained) IBOutlet NSMenu *printerMenu;
 
 @property (nonatomic, strong) PrintManager *printManager;
+@property (nonatomic, strong) FolderWatcher *folderWatcher;
 
 @end
 
@@ -25,11 +27,31 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [self setupMenu];
+    
+    if (self.folderWatcher.folderPath && self.printManager.currentPrinterName)  {
+        self.folderWatcher.printer = self.printManager;
+        [self.folderWatcher start];
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
+#pragma mark end standard AppDelegate stuff
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -(void)setupMenu {
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -39,6 +61,8 @@
     
     self.printManager = [[PrintManager alloc] init];
     [self generatePrinterMenu:self.printerMenu withDebug:YES andDefault:@"zebra"];
+    
+    self.folderWatcher = [[FolderWatcher alloc] init];
 }
 
 
@@ -73,6 +97,48 @@
         [item setState:NSOffState];
     }];
     [sender setState:NSOnState];
+}
+
+
+
+
+
+- (IBAction)chooseFolder:(id)sender {
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    
+    // Disable the selection of files in the dialog.
+    [openDlg setCanChooseFiles:NO];
+    
+    // Enable the selection of directories in the dialog.
+    [openDlg setCanChooseDirectories:YES];
+    [openDlg setAllowsMultipleSelection:NO];
+    [openDlg setPrompt:@"Select"];
+    
+    // Display the dialog.  If the OK button was pressed,
+    // process the files.
+    if ( [openDlg runModal] == NSModalResponseOK )
+    {
+        // Get directory selected
+        NSURL* dir = [openDlg URLs].firstObject;
+        self.folderWatcher.folderPath = [dir path];
+        
+//        [self showNotificationWithTitle:@"new Download Folder" andDetails:self.folderPath];
+        
+    }
+}
+
+
+
+
+
+- (IBAction)startStop:(NSMenuItem*)sender {
+    if ([sender.title isEqualToString:@"Start"]) {
+        [self.folderWatcher start];
+        [sender setTitle:@"Stop"];
+    } else {
+        [self.folderWatcher stop];
+        [sender setTitle:@"Start"];
+    }
 }
 
 
