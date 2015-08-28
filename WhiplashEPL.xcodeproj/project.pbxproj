@@ -31,10 +31,10 @@
 		D4086C5F1B90FBAD00836704 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D4086C611B90FBAD00836704 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4086C631B90FBAD00836704 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		D4086C661B90FBAD00836704 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D4086C6C1B90FBAD00836704 /* WhiplashEPLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiplashEPLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4086C711B90FBAD00836704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4086C721B90FBAD00836704 /* WhiplashEPLTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiplashEPLTests.m; sourceTree = "<group>"; };
+		D4086C811B9105B700836704 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +173,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = D4086C501B90FBAD00836704;
 			productRefGroup = D4086C5A1B90FBAD00836704 /* Products */;
@@ -237,7 +236,7 @@
 		D4086C651B90FBAD00836704 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D4086C661B90FBAD00836704 /* Base */,
+				D4086C811B9105B700836704 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -281,7 +280,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -318,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -331,6 +330,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -342,6 +342,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -401,6 +402,7 @@
 				D4086C781B90FBAD00836704 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4086C791B90FBAD00836704 /* Build configuration list for PBXNativeTarget "WhiplashEPLTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +411,7 @@
 				D4086C7B1B90FBAD00836704 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
