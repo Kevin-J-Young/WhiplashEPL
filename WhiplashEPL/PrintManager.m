@@ -29,6 +29,7 @@
     NSString *grepOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
     __block NSMutableArray *printers = [NSMutableArray arrayWithCapacity:5];
+    [printers addObject:@"Debug"];
     
     [grepOutput enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         NSRange range = [line rangeOfString:@"printer "];
@@ -43,6 +44,8 @@
     
     return [printers copy];
 }
+
+
 
 
 

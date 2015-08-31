@@ -60,43 +60,73 @@
     [self.statusItem setHighlightMode:YES];
     
     self.printManager = [[PrintManager alloc] init];
-    [self generatePrinterMenu:self.printerMenu withDebug:YES andDefault:@"zebra"];
+    [self generatePrinterMenu:self.printerMenu];
+    [self chooseDefaultPrinter];
     
     self.folderWatcher = [[FolderWatcher alloc] init];
 }
 
 
--(void)generatePrinterMenu:(NSMenu*)menu withDebug:(BOOL)debug andDefault:(NSString*)defaultName {
-    // add debug menu-item and choose it
-    if (debug) {
-        NSMenuItem *item = [menu addItemWithTitle:@"Debug"
-                                           action:@selector(changeCurrentPrinter:)
-                                    keyEquivalent:@""];
-        [self changeCurrentPrinter:item];
-    }
-    
+-(void)generatePrinterMenu:(NSMenu*)menu {
     //get list of printers and make menu-items for them
     NSArray *printers = [self.printManager printersAvailable];
     [printers enumerateObjectsUsingBlock:^(NSString *printerName, NSUInteger idx, BOOL *stop) {
-        NSMenuItem *item = [menu addItemWithTitle:printerName
-                                           action:@selector(changeCurrentPrinter:)
+        [menu addItemWithTitle:printerName
+                                           action:@selector(changeCurrentPrinterTo:)
                                     keyEquivalent:@""];
-        if (defaultName && [printerName rangeOfString:defaultName options:NSCaseInsensitiveSearch].length>0) {
-            [self changeCurrentPrinter:item];
-        }
     }];
 }
 
 
--(void)changeCurrentPrinter:(NSMenuItem*)sender {
+-(void)changeCurrentPrinterTo:(NSMenuItem*)sender {
     //change Active Printer
     self.printManager.currentPrinterName = sender.title;
+    //save choice for next launch
+    [[NSUserDefaults standardUserDefaults] setObject:sender.title forKey:@"chosenPrinter"];
     
     //move the checkmark
     [sender.menu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
-        [item setState:NSOffState];
+        if ([item.title isEqualToString:sender.title]) {
+            [item setState:NSOnState];
+        } else {
+            [item setState:NSOffState];
+        }
     }];
-    [sender setState:NSOnState];
+}
+
+-(void)chooseDefaultPrinter {
+    __block NSMenuItem *chosenMenuItem;
+    
+    NSString *saved = [[NSUserDefaults standardUserDefaults] stringForKey:@"chosenPrinter"];
+    if (saved) {
+        [self.printerMenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
+            if ([item.title isEqualToString:saved]) {
+                chosenMenuItem = item;
+            }
+        }];
+    }
+    //if we couldn't find a printer matched saved preferences, look for a zebra
+    if (!chosenMenuItem) {
+        [self.printerMenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
+            if ([item.title rangeOfString:@"zebra" options:NSCaseInsensitiveSearch].length>0) {
+                chosenMenuItem = item;
+            }
+        }];
+    }
+    //if we couldn't find any zebra, choose debug
+    if (!chosenMenuItem) {
+        [self.printerMenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
+            if ([item.title rangeOfString:@"debug" options:NSCaseInsensitiveSearch].length>0) {
+                chosenMenuItem = item;
+            }
+        }];
+    }
+    //if we still can't find anything, just choose the top of the list
+    if (!chosenMenuItem) {
+        chosenMenuItem = self.printerMenu.itemArray.firstObject;
+    }
+    
+    [self changeCurrentPrinterTo:chosenMenuItem];
 }
 
 
@@ -121,9 +151,7 @@
         // Get directory selected
         NSURL* dir = [openDlg URLs].firstObject;
         self.folderWatcher.folderPath = [dir path];
-        
-//        [self showNotificationWithTitle:@"new Download Folder" andDetails:self.folderPath];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:[dir path] forKey:@"watchFolder"];
     }
 }
 

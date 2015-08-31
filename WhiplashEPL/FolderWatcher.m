@@ -18,8 +18,13 @@
 -(instancetype)init {
     if ([super init]) {
         //read saved preferences here
-        if (!self.folderPath) {
+        NSString *savedFolder = [[NSUserDefaults standardUserDefaults] stringForKey:@"watchFolder"];
+        
+        if (savedFolder) {
+            self.folderPath = savedFolder;
+        } else {
             self.folderPath = [self downloadsFolder];
+            [[NSUserDefaults standardUserDefaults] setObject:self.folderPath forKey:@"watchFolder"];
         }
         self.validExtensions = @[@"epl", @"epl2", @"EPL", @"EPL2"];
     }
@@ -38,6 +43,7 @@
     if ([paths count] > 0) {
         downloadsDirectory = [paths objectAtIndex:0];
     }
+    NSLog(@"%@", downloadsDirectory);
     return downloadsDirectory;
 }
 
