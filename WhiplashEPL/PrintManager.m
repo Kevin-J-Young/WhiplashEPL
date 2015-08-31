@@ -64,6 +64,7 @@
 -(void)shellPrint:(NSString*)fullPath {
     if ([self.currentPrinterName isEqualToString:@"Debug"]) {
         [self showNotificationWithTitle:@"PRINT" andDetails:fullPath];
+        [self trashFile:fullPath];
     } else {
         NSPipe *pipe = [NSPipe pipe];
         
@@ -71,16 +72,19 @@
         task.launchPath = @"/usr/bin/lpr";
         task.arguments = @[@"-P", self.currentPrinterName, @"-lr", fullPath];
         task.standardOutput = pipe;
+        task.terminationHandler = ^(NSTask *aTask){
+            NSLog(@"Terminating!");
+            [self trashFile:fullPath];
+            
+        };
         
         [task launch];
     }
-    
-    
 }
 
-//-(void)trashFile:(NSString*)fullPath {
-//    NSURL *urlPath = [NSURL fileURLWithPath:fullPath isDirectory:NO];
-//    [[NSFileManager defaultManager] trashItemAtURL:urlPath resultingItemURL:nil error:nil];
-//}
+-(void)trashFile:(NSString*)fullPath {
+    NSURL *urlPath = [NSURL fileURLWithPath:fullPath isDirectory:NO];
+    [[NSFileManager defaultManager] trashItemAtURL:urlPath resultingItemURL:nil error:nil];
+}
 
 @end
