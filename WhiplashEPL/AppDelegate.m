@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "PFMoveApplication.h"
+
 #import "PrintManager.h"
 #import "FolderWatcher.h"
 
@@ -24,9 +26,14 @@
 
 @implementation AppDelegate
 
+-(void)applicationWillFinishLaunching:(NSNotification *)notification {
+    PFMoveToApplicationsFolderIfNecessary();
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [self setupMenu];
+    [self addToLoginItems];
     
     if (self.folderWatcher.folderPath && self.printManager.currentPrinterName)  {
         self.folderWatcher.printer = self.printManager;
@@ -40,12 +47,15 @@
 #pragma mark end standard AppDelegate stuff
 
 
-
-
-
-
-
-
+-(void)addToLoginItems {
+    // Get the path of the app
+    NSURL *bundleURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    NSLog(@"%@", bundleURL);
+    // Get the list you want to add the path to
+    LSSharedFileListRef loginItemsListRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    // Add the item to the list
+    LSSharedFileListInsertItemURL(loginItemsListRef, kLSSharedFileListItemLast, NULL, NULL, (__bridge CFURLRef)bundleURL, NULL, NULL);
+}
 
 
 

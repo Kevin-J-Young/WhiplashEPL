@@ -14,6 +14,7 @@
 		D4086C731B90FBAD00836704 /* WhiplashEPLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C721B90FBAD00836704 /* WhiplashEPLTests.m */; };
 		D4086C841B91078500836704 /* PrintManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C831B91078500836704 /* PrintManager.m */; };
 		D4086C871B910EA800836704 /* FolderWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C861B910EA800836704 /* FolderWatcher.m */; };
+		D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AEAB571B951AC200835CCB /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D4C3806A1B950ACA00A431AE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D4C380691B950ACA00A431AE /* LICENSE */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,8 @@
 		D4086C831B91078500836704 /* PrintManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintManager.m; sourceTree = "<group>"; };
 		D4086C851B910EA800836704 /* FolderWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderWatcher.h; sourceTree = "<group>"; };
 		D4086C861B910EA800836704 /* FolderWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderWatcher.m; sourceTree = "<group>"; };
+		D4AEAB561B951AC200835CCB /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
+		D4AEAB571B951AC200835CCB /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
 		D4C380691B950ACA00A431AE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +94,8 @@
 				D4086C831B91078500836704 /* PrintManager.m */,
 				D4086C851B910EA800836704 /* FolderWatcher.h */,
 				D4086C861B910EA800836704 /* FolderWatcher.m */,
+				D4AEAB561B951AC200835CCB /* PFMoveApplication.h */,
+				D4AEAB571B951AC200835CCB /* PFMoveApplication.m */,
 				D4086C631B90FBAD00836704 /* Images.xcassets */,
 				D4086C651B90FBAD00836704 /* MainMenu.xib */,
 				D4086C5C1B90FBAD00836704 /* Supporting Files */,
@@ -173,6 +178,7 @@
 				TargetAttributes = {
 					D4086C581B90FBAD00836704 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5YVKDCGMLJ;
 					};
 					D4086C6B1B90FBAD00836704 = {
 						CreatedOnToolsVersion = 6.4;
@@ -225,6 +231,7 @@
 			files = (
 				D4086C871B910EA800836704 /* FolderWatcher.m in Sources */,
 				D4086C621B90FBAD00836704 /* main.m in Sources */,
+				D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */,
 				D4086C841B91078500836704 /* PrintManager.m in Sources */,
 				D4086C601B90FBAD00836704 /* AppDelegate.m in Sources */,
 			);
@@ -343,6 +350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -355,6 +363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
