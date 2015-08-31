@@ -54,9 +54,10 @@
 
 
 -(void)setupMenu {
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     [self.statusItem setMenu:self.statusMenu];
-    [self.statusItem setTitle:@"W"];
+//    [self.statusItem setTitle:@"W"];
+    [self.statusItem setImage:[NSImage imageNamed:@"barIcon"]];
     [self.statusItem setHighlightMode:YES];
     
     self.printManager = [[PrintManager alloc] init];

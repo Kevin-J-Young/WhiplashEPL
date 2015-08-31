@@ -33,7 +33,7 @@
     
     [grepOutput enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         NSRange range = [line rangeOfString:@"printer "];
-        if (range.length > 0) {
+        if (range.length > 0 && range.location==0) {
             unsigned long start = range.length + range.location;
             NSString *afterPrint = [line substringFromIndex:start];
             NSRange spaceRanger = [afterPrint rangeOfString:@" "];
