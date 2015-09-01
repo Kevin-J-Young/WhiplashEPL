@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "PFMoveApplication.h"
+#import "PrinterMenu.h"
 
 #import "PrintManager.h"
 #import "FolderWatcher.h"
@@ -19,6 +20,8 @@
 @property (strong, nonatomic) NSStatusItem *statusItem;
 @property (unsafe_unretained) IBOutlet NSMenu *printerMenu;
 
+@property (nonatomic, strong) NSArray *printerMenus;
+
 @property (nonatomic, strong) PrintManager *printManager;
 @property (nonatomic, strong) FolderWatcher *folderWatcher;
 
@@ -27,7 +30,8 @@
 @implementation AppDelegate
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
-    PFMoveToApplicationsFolderIfNecessary();
+    NSLog(@"will finish");
+//    PFMoveToApplicationsFolderIfNecessary();
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -39,6 +43,7 @@
         self.folderWatcher.printer = self.printManager;
         [self.folderWatcher start];
     }
+    NSLog(@"did finish");
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -50,7 +55,6 @@
 -(void)addToLoginItems {
     // Get the path of the app
     NSURL *bundleURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    NSLog(@"%@", bundleURL);
     // Get the list you want to add the path to
     LSSharedFileListRef loginItemsListRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     // Add the item to the list
@@ -75,6 +79,16 @@
     [self chooseDefaultPrinter];
     
     self.folderWatcher = [[FolderWatcher alloc] init];
+    
+    self.printerMenus = @[
+                [PrinterMenu menuForFileTypes:@[@"pdf", @"PDF"] preferedPrinter:@"debug"],
+                [PrinterMenu menuForFileTypes:@[@"epl", @"epl2", @"EPL", @"EPL2"] preferedPrinter:@"zebra"]
+                ];
+    [self.printerMenus enumerateObjectsUsingBlock:^(PrinterMenu *pm, NSUInteger idx, BOOL *stop) {
+        [self.statusMenu addItem:pm];
+    }];
+    
+    
 }
 
 

@@ -14,6 +14,7 @@
 		D4086C731B90FBAD00836704 /* WhiplashEPLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C721B90FBAD00836704 /* WhiplashEPLTests.m */; };
 		D4086C841B91078500836704 /* PrintManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C831B91078500836704 /* PrintManager.m */; };
 		D4086C871B910EA800836704 /* FolderWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4086C861B910EA800836704 /* FolderWatcher.m */; };
+		D40933A81B95242D000836F0 /* PrinterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D40933A71B95242D000836F0 /* PrinterMenu.m */; };
 		D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AEAB571B951AC200835CCB /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D4C3806A1B950ACA00A431AE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D4C380691B950ACA00A431AE /* LICENSE */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,8 @@
 		D4086C831B91078500836704 /* PrintManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintManager.m; sourceTree = "<group>"; };
 		D4086C851B910EA800836704 /* FolderWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderWatcher.h; sourceTree = "<group>"; };
 		D4086C861B910EA800836704 /* FolderWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderWatcher.m; sourceTree = "<group>"; };
+		D40933A61B95242D000836F0 /* PrinterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrinterMenu.h; sourceTree = "<group>"; };
+		D40933A71B95242D000836F0 /* PrinterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrinterMenu.m; sourceTree = "<group>"; };
 		D4AEAB561B951AC200835CCB /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
 		D4AEAB571B951AC200835CCB /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
 		D4C380691B950ACA00A431AE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 			children = (
 				D4086C5E1B90FBAD00836704 /* AppDelegate.h */,
 				D4086C5F1B90FBAD00836704 /* AppDelegate.m */,
+				D40933A61B95242D000836F0 /* PrinterMenu.h */,
+				D40933A71B95242D000836F0 /* PrinterMenu.m */,
 				D4086C821B91078500836704 /* PrintManager.h */,
 				D4086C831B91078500836704 /* PrintManager.m */,
 				D4086C851B910EA800836704 /* FolderWatcher.h */,
@@ -232,6 +237,7 @@
 				D4086C871B910EA800836704 /* FolderWatcher.m in Sources */,
 				D4086C621B90FBAD00836704 /* main.m in Sources */,
 				D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */,
+				D40933A81B95242D000836F0 /* PrinterMenu.m in Sources */,
 				D4086C841B91078500836704 /* PrintManager.m in Sources */,
 				D4086C601B90FBAD00836704 /* AppDelegate.m in Sources */,
 			);

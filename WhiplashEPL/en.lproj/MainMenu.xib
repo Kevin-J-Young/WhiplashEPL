@@ -44,6 +44,7 @@
                         <action selector="terminate:" target="-2" id="ERP-Tu-UAL"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="1RX-g0-5ZN"/>
             </items>
         </menu>
     </objects>
