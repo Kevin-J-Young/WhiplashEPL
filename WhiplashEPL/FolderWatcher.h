@@ -9,7 +9,16 @@
 #import <Foundation/Foundation.h>
 @class PrintManager;
 
-@interface FolderWatcher : NSObject
+@interface FolderWatcher : NSObject {
+    NSString *_folderPath;
+    NSArray *_contents;
+    NSArray *_lastContents;
+    NSTimer *_timer;
+    
+    NSArray *_validExtensions;
+    
+    PrintManager *_printer;
+}
 
 
 

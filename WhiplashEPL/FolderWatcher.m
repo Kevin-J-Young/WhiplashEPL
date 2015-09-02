@@ -12,7 +12,12 @@
 
 @implementation FolderWatcher
 
-
+@synthesize folderPath = _folderPath;
+@synthesize contents = _contents;
+@synthesize lastContents = _lastContents;
+@synthesize timer = _timer;
+@synthesize validExtensions = _validExtensions;
+@synthesize printer = _printer;
 
 
 -(instancetype)init {

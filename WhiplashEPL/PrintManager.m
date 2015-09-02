@@ -11,6 +11,8 @@
 
 @implementation PrintManager
 
+@synthesize currentPrinterName = _currentPrinterName;
+
 -(NSArray*)printersAvailable {
     NSPipe *pipe = [NSPipe pipe];
     NSFileHandle *file = pipe.fileHandleForReading;

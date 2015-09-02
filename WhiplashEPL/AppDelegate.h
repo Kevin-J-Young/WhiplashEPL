@@ -7,8 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class PrintManager;
+@class FolderWatcher;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+    PrintManager *_printManager;
+    NSMenu *_statusMenu;
+    NSStatusItem *_statusItem;
+    NSMenu *_printerMenu;
+    FolderWatcher *_folderWatcher;
+}
 
 
 

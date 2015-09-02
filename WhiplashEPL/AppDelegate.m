@@ -13,7 +13,7 @@
 #import "PrintManager.h"
 #import "FolderWatcher.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () 
 
 @property (strong, nonatomic) IBOutlet NSMenu *statusMenu;
 @property (strong, nonatomic) NSStatusItem *statusItem;
@@ -22,18 +22,29 @@
 @property (nonatomic, strong) PrintManager *printManager;
 @property (nonatomic, strong) FolderWatcher *folderWatcher;
 
+
+
+
 @end
+
+
 
 @implementation AppDelegate
 
+@synthesize printManager = _printManager;
+@synthesize folderWatcher = _folderWatcher;
+@synthesize printerMenu = _printerMenu;
+@synthesize statusItem = _statusItem;
+@synthesize statusMenu = _statusMenu;
+
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
-    PFMoveToApplicationsFolderIfNecessary();
+//    PFMoveToApplicationsFolderIfNecessary();
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [self setupMenu];
-    [self addToLoginItems];
+//    [self addToLoginItems];
     
     if (self.folderWatcher.folderPath && self.printManager.currentPrinterName)  {
         self.folderWatcher.printer = self.printManager;
