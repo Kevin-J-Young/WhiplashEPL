@@ -51,17 +51,31 @@
     }
 }
 
-- (void)refreshUserDefaults
-{
+- (void)deletePreferences {
+    NSLog(@"deleting preferences to start fresh");
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunchComplete"];
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 -(void)buildDefaultPreferences {
     NSLog(@"building default preferences");
-    Folder *folder = [[Folder alloc] init];
-    [folder setupDefaults];
+    FileType *epl = [FileType withTypelist:@[@"EPL2", @"epl"] andPrinterName:@"zebra"];
+    FileType *pdf = [FileType withTypelist:@[@"pdf"] andPrinterName:@"choose Printer"];
+    FileType *png = [FileType withTypelist:@[@"png", @"PNG"] andPrinterName:@"choose Printer"];
+
+    Folder *folder = [[Folder alloc] initWithFiletypes:@[epl, pdf, png] andFolderPath:[self downloadsFolder]];
     self.watchedFolders = @[folder];
+    [self savePreferences];
 }
 
+-(NSString*)downloadsFolder {
+    NSString *downloadsDirectory;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, NO);
+    if ([paths count] > 0) {
+        downloadsDirectory = [paths objectAtIndex:0];
+    }
+    NSLog(@"%@", downloadsDirectory);
+    return downloadsDirectory;
+}
 @end

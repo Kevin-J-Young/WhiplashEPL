@@ -33,25 +33,28 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-//    [[FileManager sharedInstance] refreshUserDefaults];
-    [[FileManager sharedInstance] loadPreferences];
-//
-    [self codeMenu];
-
+    [[FileManager sharedInstance] deletePreferences];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunchComplete"]) {
+        [[FileManager sharedInstance] loadPreferences];
+    } else {
+        [[FileManager sharedInstance] buildDefaultPreferences];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
+    }
+    
+    // build UI
+    NSMenu *menu = [self buildStatusMenu];
+    [self populateMenu:menu];
+    
+    // start loop
+    [[FolderWatcher sharedInstance] start];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    [[FileManager sharedInstance] savePreferences];
 }
 #pragma mark end standard AppDelegate stuff
-
-
-
-
-
-
-
-
 
 
 
@@ -75,29 +78,33 @@
 
 
 
-
-
-
--(void)codeMenu {
+-(NSMenu*)buildStatusMenu {
     NSMenu *mainMenu = [[NSMenu alloc] initWithTitle:@"main"];
     
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     [self.statusItem setMenu:mainMenu];
     [self.statusItem setImage:[NSImage imageNamed:@"barIcon"]];
     [self.statusItem setHighlightMode:YES];
+    
+    return mainMenu;
+}
+
+
+-(void)populateMenu:(NSMenu*)menu {
+    
         
     NSArray *folders = [[FileManager sharedInstance] watchedFolders];
     [folders enumerateObjectsUsingBlock:^(Folder *folder, NSUInteger idx, BOOL *stop) {
-        [folder addToMenu:mainMenu];
+        [folder addToMenu:menu];
     }];
     
-    [mainMenu addItem:[NSMenuItem separatorItem]];
+    [menu addItem:[NSMenuItem separatorItem]];
 
 
-    NSMenuItem *toggleItem = [[NSMenuItem alloc] initWithTitle:@"Start" action:@selector(toggleWatcher:) keyEquivalent:@""];
-    [mainMenu addItem:toggleItem];
-    [mainMenu addItem:[NSMenuItem separatorItem]];
-    [mainMenu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
+    NSMenuItem *toggleItem = [[NSMenuItem alloc] initWithTitle:@"Stop" action:@selector(toggleWatcher:) keyEquivalent:@""];
+    [menu addItem:toggleItem];
+    [menu addItem:[NSMenuItem separatorItem]];
+    [menu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
 }
 
 

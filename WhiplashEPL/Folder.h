@@ -16,8 +16,9 @@
 @property (nonatomic, strong) NSArray *fileTypes;
 @property (nonatomic, strong) NSString *url;
 
+-(instancetype)initWithFiletypes:(NSArray*)filetypes andFolderPath:(NSString*)url;
+
 -(NSString*)fullPath;
--(void)setupDefaults;
 -(void)addToMenu:(NSMenu*)menu;
 
 @end

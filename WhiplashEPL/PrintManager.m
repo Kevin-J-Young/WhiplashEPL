@@ -40,7 +40,7 @@
     NSString *grepOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
     __block NSMutableArray *printers = [NSMutableArray arrayWithCapacity:5];
-    [printers addObject:@"Debug"];
+    [printers addObject:@"choose Printer"];
     
     [grepOutput enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
         NSRange range = [line rangeOfString:@"printer "];
@@ -72,10 +72,11 @@
 
 
 -(void)sendFile:(NSString*)filePath toPrinter:(NSString*)printerName {
-    if ([printerName isEqualToString:@"Debug"]) {
+    if ([printerName isEqualToString:@"choose Printer"]) {
         [self showNotificationWithTitle:@"PRINT" andDetails:filePath];
         [self trashFile:filePath];
     } else {
+        NSLog(@"Printing %@ to %@", filePath, printerName);
         NSPipe *pipe = [NSPipe pipe];
         
         NSTask *task = [[NSTask alloc] init];

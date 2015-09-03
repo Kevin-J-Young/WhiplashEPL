@@ -9,35 +9,38 @@
 #import "Folder.h"
 
 #import "FileType.h"
+#import "FileManager.h"
+#import "AppDelegate.h"
 
 @implementation Folder
 
 @synthesize fileTypes = _fileTypes;
 @synthesize url = _url;
 
--(NSString*)title {
-    return _url;
-}
 
-
--(NSString*)description {
-    return [NSString stringWithFormat:@"%@ - %@", self.url, self.fileTypes];
+-(instancetype)initWithFiletypes:(NSArray*)filetypes andFolderPath:(NSString*)url {
+    if (self = [super init]) {
+        self.fileTypes = filetypes;
+        if (!self.fileTypes) {
+            self.fileTypes = [NSArray array];
+        }
+        self.url = url;
+        
+        [self setTarget:self];
+        [self setAction:@selector(editPath:)];
+        [self setKeyEquivalent:@""];
+        [self setTitle:@"Watched Folder..."];
+    }
+    return self;
 }
 
 #pragma mark - NSCoding
 - (id)initWithCoder:(NSCoder *)decoder {
-    self = [super init];
+    self = [self initWithFiletypes:[decoder decodeObjectForKey:@"fileTypes"]
+                     andFolderPath:[decoder decodeObjectForKey:@"url"]];
     if (!self) {
         return nil;
     }
-    
-    self.fileTypes = [decoder decodeObjectForKey:@"fileTypes"];
-    self.url = [decoder decodeObjectForKey:@"url"];
-    
-    [self setTarget:self];
-    [self setAction:@selector(editPath:)];
-    [self setKeyEquivalent:@""];
-    
     
     return self;
 }
@@ -49,39 +52,61 @@
 
 -(void)addToMenu:(NSMenu*)menu {
     [menu insertItem:self atIndex:menu.numberOfItems];
+    [[menu insertItemWithTitle:@"New File Type..." action:@selector(addFileType) keyEquivalent:@"" atIndex:menu.numberOfItems] setTarget:self];
     
     [self.fileTypes enumerateObjectsUsingBlock:^(FileType *filetype, NSUInteger idx, BOOL *stop) {
         [menu insertItem:filetype atIndex:menu.numberOfItems];
     }];
 }
 
+-(NSInteger)highestFiletypeIndex {
+    __block NSInteger highest = 0;
+    [self.fileTypes enumerateObjectsUsingBlock:^(FileType *ft, NSUInteger idx, BOOL *stop) {
+        if ([self.menu indexOfItem:ft] > highest) {
+            highest = [self.menu indexOfItem:ft];
+        }
+    }];
+    return highest;
+}
 
+-(void)addFileType {
+    //get user input
+    NSString *st = [self input:@"enter file extentions to watch for, separated by spaces" defaultValue:@"epl epl2 EPL"];
+    
+    //create FileType object
+    FileType *ft = [FileType withTypelist:[st componentsSeparatedByString:@" "] andPrinterName:@"choose Printer"];
+    
+    //add to running model
+    self.fileTypes = [self.fileTypes arrayByAddingObject:ft];
+    [[FileManager sharedInstance] savePreferences];
 
--(void)setupDefaults {
-    self.url = [self downloadsFolder];
     
-    FileType *epl = [[FileType alloc] init];
-    epl.fileExtensionList = @[@"epl", @"epl2", @"EPL", @"EPL2"];
-    epl.printerName = @"Debug";
-    
-    FileType *pdf = [[FileType alloc] init];
-    pdf.fileExtensionList = @[@"pdf", @"PDF"];
-    pdf.printerName = @"Debug";
-    
-    self.fileTypes = @[epl, pdf];
+    //add to menu view
+    [self.menu insertItem:ft atIndex:[self highestFiletypeIndex]];
 }
 
 
-
--(NSString*)downloadsFolder {
-    NSString *downloadsDirectory;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, NO);
-    if ([paths count] > 0) {
-        downloadsDirectory = [paths objectAtIndex:0];
+- (NSString *)input: (NSString *)prompt defaultValue: (NSString *)defaultValue {
+    NSAlert *alert = [NSAlert alertWithMessageText: prompt
+                                     defaultButton:@"OK"
+                                   alternateButton:@"Cancel"
+                                       otherButton:nil
+                         informativeTextWithFormat:@""];
+    
+    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+    [input setStringValue:defaultValue];
+    [alert setAccessoryView:input];
+    NSInteger button = [alert runModal];
+    if (button == NSAlertDefaultReturn) {
+        [input validateEditing];
+        return [input stringValue];
+    } else if (button == NSAlertAlternateReturn) {
+        return nil;
+    } else {
+        return nil;
     }
-    NSLog(@"%@", downloadsDirectory);
-    return downloadsDirectory;
 }
+
 
 
 -(void)editPath:(Folder*)sender {

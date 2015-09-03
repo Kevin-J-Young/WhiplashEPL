@@ -44,7 +44,7 @@
 
 -(void)start {
     if (!self.timer.valid) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
     }
 }
 

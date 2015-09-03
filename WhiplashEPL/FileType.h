@@ -16,4 +16,7 @@
 @property (nonatomic, strong) NSArray *fileExtensionList;
 @property (nonatomic, strong) NSString *printerName;
 
++(FileType*)withTypelist:(NSArray*)extensions andPrinterName:(NSString*)printer;
+
+
 @end

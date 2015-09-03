@@ -19,6 +19,7 @@
 
 -(void)savePreferences;
 -(void)loadPreferences;
--(void)refreshUserDefaults;
+-(void)deletePreferences;
+-(void)buildDefaultPreferences;
 
 @end
