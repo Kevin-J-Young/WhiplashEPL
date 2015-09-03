@@ -11,7 +11,16 @@
 
 @implementation PrintManager
 
-@synthesize currentPrinterName = _currentPrinterName;
++(PrintManager*)sharedInstance
+{
+    static PrintManager *_sharedInstance = nil;
+    static dispatch_once_t oncePredicate;
+    
+    dispatch_once(&oncePredicate, ^{
+        _sharedInstance = [[PrintManager alloc] init];
+    });
+    return _sharedInstance;
+}
 
 -(NSArray*)printersAvailable {
     NSPipe *pipe = [NSPipe pipe];
@@ -50,7 +59,6 @@
 
 
 
-
 #pragma mark - debug notifications
 -(void)showNotificationWithTitle:(NSString*)title andDetails:(NSString*)details {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -63,21 +71,20 @@
 }
 
 
--(void)shellPrint:(NSString*)fullPath {
-    if ([self.currentPrinterName isEqualToString:@"Debug"]) {
-        [self showNotificationWithTitle:@"PRINT" andDetails:fullPath];
-        [self trashFile:fullPath];
+-(void)sendFile:(NSString*)filePath toPrinter:(NSString*)printerName {
+    if ([printerName isEqualToString:@"Debug"]) {
+        [self showNotificationWithTitle:@"PRINT" andDetails:filePath];
+        [self trashFile:filePath];
     } else {
         NSPipe *pipe = [NSPipe pipe];
         
         NSTask *task = [[NSTask alloc] init];
         task.launchPath = @"/usr/bin/lpr";
-        task.arguments = @[@"-P", self.currentPrinterName, @"-lr", fullPath];
+        task.arguments = @[@"-P", printerName, @"-lr", filePath];
         task.standardOutput = pipe;
         task.terminationHandler = ^(NSTask *aTask){
-            NSLog(@"Terminating!");
-            [self trashFile:fullPath];
-            
+            NSLog(@"print job complete, deleting file");
+            [self trashFile:filePath];
         };
         
         [task launch];

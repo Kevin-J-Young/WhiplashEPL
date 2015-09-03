@@ -12,39 +12,8 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
-            <connections>
-                <outlet property="printerMenu" destination="SH9-9W-Q5G" id="mMU-RS-2Ez"/>
-                <outlet property="statusMenu" destination="fLO-lp-c4J" id="Cag-Qa-HFL"/>
-            </connections>
-        </customObject>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <menu id="fLO-lp-c4J">
-            <items>
-                <menuItem title="Choose Watch Folder" id="ITX-oV-xqY">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="chooseFolder:" target="Voe-Tx-rLC" id="5wd-Ow-8oh"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Printers" id="das-H4-vnF">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Printers" id="SH9-9W-Q5G"/>
-                </menuItem>
-                <menuItem title="Stop" id="cHc-zF-g6X">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="startStop:" target="Voe-Tx-rLC" id="pve-vw-cmi"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="0pF-H4-PNh"/>
-                <menuItem title="Quit" id="7Sw-K0-aQa">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="terminate:" target="-2" id="ERP-Tu-UAL"/>
-                    </connections>
-                </menuItem>
-            </items>
-        </menu>
+        <menu id="fLO-lp-c4J"/>
     </objects>
 </document>

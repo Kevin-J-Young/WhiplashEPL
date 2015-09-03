@@ -9,64 +9,46 @@
 #import "FolderWatcher.h"
 
 #import "PrintManager.h"
+#import "Folder.h"
+#import "FileType.h"
+#import "FileManager.h"
 
 @implementation FolderWatcher
-
-@synthesize folderPath = _folderPath;
-@synthesize contents = _contents;
-@synthesize lastContents = _lastContents;
 @synthesize timer = _timer;
-@synthesize validExtensions = _validExtensions;
-@synthesize printer = _printer;
 
-
--(instancetype)init {
-    if ([super init]) {
-        //read saved preferences here
-        NSString *savedFolder = [[NSUserDefaults standardUserDefaults] stringForKey:@"watchFolder"];
-        
-        if (savedFolder) {
-            self.folderPath = savedFolder;
-        } else {
-            self.folderPath = [self downloadsFolder];
-            [[NSUserDefaults standardUserDefaults] setObject:self.folderPath forKey:@"watchFolder"];
-        }
-        self.validExtensions = @[@"epl", @"epl2", @"EPL", @"EPL2"];
-    }
-    return self;
++(FolderWatcher*)sharedInstance
+{
+    static FolderWatcher *_sharedInstance = nil;
+    static dispatch_once_t oncePredicate;
+    
+    dispatch_once(&oncePredicate, ^{
+        _sharedInstance = [[FolderWatcher alloc] init];
+    });
+    return _sharedInstance;
 }
 
 
 
-
-
-
-
--(NSString*)downloadsFolder {
-    NSString *downloadsDirectory;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
-    if ([paths count] > 0) {
-        downloadsDirectory = [paths objectAtIndex:0];
-    }
-    NSLog(@"%@", downloadsDirectory);
-    return downloadsDirectory;
+-(BOOL)isRunning {
+    return self.timer.valid;
 }
 
-
-
-
-
+-(NSString*)nextToggleState {
+    if (self.timer.valid) {
+        return @"Stop";
+    } else {
+        return @"Start";
+    }
+}
 
 
 -(void)start {
-//    NSLog(@"start?");
     if (!self.timer.valid) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
     }
 }
 
 -(void)stop {
-//    NSLog(@"stop?");
     if (self.timer.valid) {
         [self.timer invalidate];
     }
@@ -88,35 +70,20 @@
 
 -(void)checkFolderStatus
 {
-    self.contents =[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.folderPath error:nil];
-    
-    [self performSelectorOnMainThread:@selector(getNewFiles) withObject:self.contents waitUntilDone:YES];
-}
-
--(void)getNewFiles {
-    NSMutableArray *newFiles = [self.contents mutableCopy];
-    if (self.lastContents) {
-        [newFiles removeObjectsInArray:self.lastContents];
-    }
-    
-    if (newFiles.count > 0) {
-        [self filterEPL:[newFiles copy]];
-    }
-    
-    self.lastContents = self.contents;
-}
-
--(void)filterEPL:(NSArray*)newFiles {
-    [newFiles enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL *stop){
-        if ([self.validExtensions containsObject:[filename pathExtension]]) {
-            NSString *fullPath = [self.folderPath stringByAppendingPathComponent:filename];
-            [self.printer shellPrint:fullPath];
-        }
+    NSLog(@"checking...");
+    [[[FileManager sharedInstance] watchedFolders] enumerateObjectsUsingBlock:^(Folder *folder, NSUInteger idx, BOOL *stop) {
+        
+        NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folder.fullPath error:nil];
+//        NSLog(@"%@>> %d items", folder.fullPath, contents.count);
+        [folder.fileTypes enumerateObjectsUsingBlock:^(FileType *filetype, NSUInteger idx, BOOL *stop) {
+            [contents enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL *stop){
+                if ([filetype.fileExtensionList containsObject:[filename pathExtension]]) {
+                    NSString *fullPath = [folder.fullPath stringByAppendingPathComponent:filename];
+                    [[PrintManager sharedInstance] sendFile:fullPath toPrinter:filetype.printerName];
+                }
+            }];
+        }];
     }];
 }
-
-
-
-
 
 @end

@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PrintManager : NSObject {
-    NSString *_currentPrinterName;
-}
+@interface PrintManager : NSObject
 
-@property (nonatomic, strong) NSString *currentPrinterName;
++(PrintManager*)sharedInstance;
 
 -(NSArray*)printersAvailable;
--(void)shellPrint:(NSString*)fullPath;
+-(void)sendFile:(NSString*)filePath toPrinter:(NSString*)printerName;
 
 @end
