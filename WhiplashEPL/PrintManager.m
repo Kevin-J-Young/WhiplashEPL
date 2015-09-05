@@ -8,6 +8,10 @@
 
 #import "PrintManager.h"
 
+#import "FileManager.h"
+@import AppKit;
+
+
 
 @implementation PrintManager
 
@@ -72,29 +76,46 @@
 
 
 -(void)sendFile:(NSString*)filePath toPrinter:(NSString*)printerName {
+//    NSString *logStr = [NSString stringWithFormat:@"%@ - %@", filePath, printerName];
+//    [[FileManager sharedInstance] writeToLog:logStr];
+    
     if ([printerName isEqualToString:@"choose Printer"]) {
         [self showNotificationWithTitle:@"PRINT" andDetails:filePath];
         [self trashFile:filePath];
     } else {
-        NSLog(@"Printing %@ to %@", filePath, printerName);
+//        NSLog(@"Printing %@ to %@", filePath, printerName);
+//        [[FileManager sharedInstance] writeToLog:@"printing now?"];
         NSPipe *pipe = [NSPipe pipe];
         
         NSTask *task = [[NSTask alloc] init];
+//        [[FileManager sharedInstance] writeToLog:@"created task"];
         task.launchPath = @"/usr/bin/lpr";
         task.arguments = @[@"-P", printerName, @"-lr", filePath];
         task.standardOutput = pipe;
-        task.terminationHandler = ^(NSTask *aTask){
-            NSLog(@"print job complete, deleting file");
-            [self trashFile:filePath];
-        };
+//        [[FileManager sharedInstance] writeToLog:@"NOT adding termination handler..."];
+//        task.terminationHandler = ^(NSTask *aTask){
+//            NSLog(@"print job complete, deleting file");
+//            [[FileManager sharedInstance] writeToLog:@"print job complete, deleting file?"];
+////            [self trashFile:filePath];
+//        };
         
+        
+        
+//        [[FileManager sharedInstance] writeToLog:@"about to launch task"];
         [task launch];
+//        [[FileManager sharedInstance] writeToLog:@"task launched, waiting.."];
+        [task waitUntilExit];
+//        [[FileManager sharedInstance] writeToLog:@"task finished"];
+        [self trashFile:filePath];
+//        [[FileManager sharedInstance] writeToLog:@"trasher returned"];
     }
 }
 
 -(void)trashFile:(NSString*)fullPath {
+//    [[FileManager sharedInstance] writeToLog:@"trashing?"];
     NSURL *urlPath = [NSURL fileURLWithPath:fullPath isDirectory:NO];
-    [[NSFileManager defaultManager] trashItemAtURL:urlPath resultingItemURL:nil error:nil];
+    [[NSWorkspace sharedWorkspace] recycleURLs:@[urlPath] completionHandler:nil];
+//    [[FileManager sharedInstance] writeToLog:@"trashed!!!"];
 }
 
 @end

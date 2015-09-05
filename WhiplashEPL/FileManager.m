@@ -15,6 +15,7 @@
 
 @implementation FileManager
 @synthesize watchedFolders = _watchedFolders;
+//@synthesize logPath = _logPath;
 
 +(FileManager*)sharedInstance {
     static FileManager *_sharedInstance = nil;
@@ -24,6 +25,19 @@
         _sharedInstance = [[FileManager alloc] init];
     });
     return _sharedInstance;
+}
+
+-(NSString*)logPath {
+//    if (!_logPath) {
+        NSString *dl = [[self downloadsFolder] stringByExpandingTildeInPath];
+        NSString *path = [dl stringByAppendingString:@"/LOG.txt"];
+//        _logPath = path;
+//        NSLog(@"%@", path);
+//        _logPath = @"/Users/kevinyoung/Downloads/WHIP-Log.txt";
+//    }
+//    return @"/Users/kevinyoung/Downloads/WHIP-Log.txt";
+//    NSLog(@"%@", _logPath);
+    return path;
 }
 
 
@@ -75,7 +89,60 @@
     if ([paths count] > 0) {
         downloadsDirectory = [paths objectAtIndex:0];
     }
-    NSLog(@"%@", downloadsDirectory);
+//    NSLog(@"%@", downloadsDirectory);
     return downloadsDirectory;
 }
+
+//-(NSString*)logPath {
+//    return [[self downloadsFolder] stringByAppendingPathComponent:@"logFile.txt"];
+//}
+
+
+
+
+#pragma mark - logFile
+-(void)createLogfile {
+//    Folder *fol = (Folder*)self.watchedFolders.firstObject;
+//    _logPath = [fol.fullPath stringByAppendingPathComponent:@"foo.txt"];
+//    NSLog(@"%@", _logPath);
+    
+//    [[NSFileManager defaultManager] createFileAtPath:self.logPath contents:nil attributes:nil];
+    [self appendLine:@"firstLine" ToFile:self.logPath encoding:NSUTF8StringEncoding];
+}
+
+-(void)writeToLog:(NSString*)line {
+//    if ([[NSFileManager defaultManager] isReadableFileAtPath:self.logPath]) {
+//        NSString *contents = [NSString stringWithFormat:@"%@\n%@", [NSString stringWithContentsOfFile:self.logPath], line];
+//        
+//        [contents writeToFile:self.logPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+//    } else {
+//        NSLog(@"no file");
+//    }
+    [self appendLine:line ToFile:self.logPath encoding:NSUTF8StringEncoding];
+}
+
+
+
+
+- (BOOL)appendLine:(NSString*)line ToFile:(NSString *)path encoding:(NSStringEncoding)enc;
+{
+    line = [NSString stringWithFormat:@"%@\n", line];
+    BOOL result = YES;
+    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    if ( !fh ) {
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
+        fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    }
+    if ( !fh ) return NO;
+    @try {
+        [fh seekToEndOfFile];
+        [fh writeData:[line dataUsingEncoding:enc]];
+    }
+    @catch (NSException * e) {
+        result = NO;
+    }
+    [fh closeFile];
+    return result;
+}
+
 @end

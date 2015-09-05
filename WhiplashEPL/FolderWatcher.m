@@ -71,10 +71,17 @@
 -(void)checkFolderStatus
 {
     NSLog(@"checking...");
+//    [[FileManager sharedInstance] writeToLog:@"checking"];
+    
+    
     [[[FileManager sharedInstance] watchedFolders] enumerateObjectsUsingBlock:^(Folder *folder, NSUInteger idx, BOOL *stop) {
         
         NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folder.fullPath error:nil];
-//        NSLog(@"%@>> %d items", folder.fullPath, contents.count);
+        
+//        NSString *logStr = [NSString stringWithFormat:@"%@>> %lu items", folder.fullPath, (unsigned long)contents.count];
+////        NSLog(logStr);
+//        [[FileManager sharedInstance] writeToLog:logStr];
+        
         [folder.fileTypes enumerateObjectsUsingBlock:^(FileType *filetype, NSUInteger idx, BOOL *stop) {
             [contents enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL *stop){
                 if ([filetype.fileExtensionList containsObject:[filename pathExtension]]) {

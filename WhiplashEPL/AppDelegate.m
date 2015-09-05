@@ -27,13 +27,14 @@
 
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
-//    PFMoveToApplicationsFolderIfNecessary();
-//    [self addToLoginItems];
+    PFMoveToApplicationsFolderIfNecessary();
+    [self addToLoginItems];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    [[FileManager sharedInstance] deletePreferences];
+//    [[FileManager sharedInstance] deletePreferences];
+    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunchComplete"]) {
         [[FileManager sharedInstance] loadPreferences];
@@ -41,10 +42,15 @@
         [[FileManager sharedInstance] buildDefaultPreferences];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
     }
+//    [[FileManager sharedInstance] createLogfile];
     
     // build UI
     NSMenu *menu = [self buildStatusMenu];
     [self populateMenu:menu];
+    
+    
+//    [[FileManager sharedInstance] writeToLog:@"line41?"];
+    
     
     // start loop
     [[FolderWatcher sharedInstance] start];
