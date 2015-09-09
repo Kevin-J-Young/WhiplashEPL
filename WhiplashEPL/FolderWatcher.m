@@ -44,7 +44,7 @@
 
 -(void)start {
     if (!self.timer.valid) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(checkFolderStatus) userInfo:nil repeats:YES];
     }
 }
 
@@ -83,12 +83,15 @@
 //        [[FileManager sharedInstance] writeToLog:logStr];
         
         [folder.fileTypes enumerateObjectsUsingBlock:^(FileType *filetype, NSUInteger idx, BOOL *stop) {
-            [contents enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL *stop){
-                if ([filetype.fileExtensionList containsObject:[filename pathExtension]]) {
-                    NSString *fullPath = [folder.fullPath stringByAppendingPathComponent:filename];
-                    [[PrintManager sharedInstance] sendFile:fullPath toPrinter:filetype.printerName];
-                }
-            }];
+            if (![filetype.printerName isEqualToString:@"choose Printer"]) {
+                [contents enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL *stop){
+                    if ([filetype.fileExtensionList containsObject:[filename pathExtension]]) {
+                        NSString *fullPath = [folder.fullPath stringByAppendingPathComponent:filename];
+                        [[PrintManager sharedInstance] sendFile:fullPath toPrinter:filetype.printerName];
+                    }
+                }];
+            }
+            
         }];
     }];
 }

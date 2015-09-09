@@ -83,7 +83,7 @@
         [self showNotificationWithTitle:@"PRINT" andDetails:filePath];
         [self trashFile:filePath];
     } else {
-//        NSLog(@"Printing %@ to %@", filePath, printerName);
+        NSLog(@"Printing %@ to %@", filePath, printerName);
 //        [[FileManager sharedInstance] writeToLog:@"printing now?"];
         NSPipe *pipe = [NSPipe pipe];
         
