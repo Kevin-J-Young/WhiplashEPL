@@ -10,11 +10,9 @@
 
 @interface FileManager : NSObject {
     NSArray *_watchedFolders;
-//    NSString *_logPath;
 }
 
 @property (nonatomic, strong) NSArray *watchedFolders;
-//@property (nonatomic, strong) NSString *logPath;
 
 +(FileManager*)sharedInstance;
 
@@ -24,7 +22,6 @@
 -(void)deletePreferences;
 -(void)buildDefaultPreferences;
 
--(void)createLogfile;
 -(void)writeToLog:(NSString*)line;
 
 @end

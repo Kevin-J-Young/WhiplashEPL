@@ -42,14 +42,12 @@
         [[FileManager sharedInstance] buildDefaultPreferences];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
     }
-//    [[FileManager sharedInstance] createLogfile];
     
     // build UI
     NSMenu *menu = [self buildStatusMenu];
     [self populateMenu:menu];
     
     
-//    [[FileManager sharedInstance] writeToLog:@"line41?"];
     
     
     // start loop

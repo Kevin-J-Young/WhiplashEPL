@@ -15,7 +15,6 @@
 
 @implementation FileManager
 @synthesize watchedFolders = _watchedFolders;
-//@synthesize logPath = _logPath;
 
 +(FileManager*)sharedInstance {
     static FileManager *_sharedInstance = nil;
@@ -28,15 +27,9 @@
 }
 
 -(NSString*)logPath {
-//    if (!_logPath) {
-        NSString *dl = [[self downloadsFolder] stringByExpandingTildeInPath];
-        NSString *path = [dl stringByAppendingString:@"/LOG.txt"];
-//        _logPath = path;
-//        NSLog(@"%@", path);
-//        _logPath = @"/Users/kevinyoung/Downloads/WHIP-Log.txt";
-//    }
-//    return @"/Users/kevinyoung/Downloads/WHIP-Log.txt";
-//    NSLog(@"%@", _logPath);
+    NSString *dl = [[self downloadsFolder] stringByExpandingTildeInPath];
+    NSString *path = [dl stringByAppendingString:@"/LOG.txt"];
+    
     return path;
 }
 
@@ -76,9 +69,8 @@
     NSLog(@"building default preferences");
     FileType *epl = [FileType withTypelist:@[@"EPL2", @"epl"] andPrinterName:@"zebra"];
     FileType *pdf = [FileType withTypelist:@[@"pdf"] andPrinterName:@"choose Printer"];
-    FileType *png = [FileType withTypelist:@[@"png", @"PNG"] andPrinterName:@"choose Printer"];
 
-    Folder *folder = [[Folder alloc] initWithFiletypes:@[epl, pdf, png] andFolderPath:[self downloadsFolder]];
+    Folder *folder = [[Folder alloc] initWithFiletypes:@[epl, pdf] andFolderPath:[self downloadsFolder]];
     self.watchedFolders = @[folder];
     [self savePreferences];
 }
@@ -93,31 +85,12 @@
     return downloadsDirectory;
 }
 
-//-(NSString*)logPath {
-//    return [[self downloadsFolder] stringByAppendingPathComponent:@"logFile.txt"];
-//}
 
 
 
 
 #pragma mark - logFile
--(void)createLogfile {
-//    Folder *fol = (Folder*)self.watchedFolders.firstObject;
-//    _logPath = [fol.fullPath stringByAppendingPathComponent:@"foo.txt"];
-//    NSLog(@"%@", _logPath);
-    
-//    [[NSFileManager defaultManager] createFileAtPath:self.logPath contents:nil attributes:nil];
-    [self appendLine:@"firstLine" ToFile:self.logPath encoding:NSUTF8StringEncoding];
-}
-
 -(void)writeToLog:(NSString*)line {
-//    if ([[NSFileManager defaultManager] isReadableFileAtPath:self.logPath]) {
-//        NSString *contents = [NSString stringWithFormat:@"%@\n%@", [NSString stringWithContentsOfFile:self.logPath], line];
-//        
-//        [contents writeToFile:self.logPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-//    } else {
-//        NSLog(@"no file");
-//    }
     [self appendLine:line ToFile:self.logPath encoding:NSUTF8StringEncoding];
 }
 
