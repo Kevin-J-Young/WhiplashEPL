@@ -65,8 +65,9 @@
 
 -(void)buildMenuItem {
     [self generatePrinterMenu:self.submenu];
-    NSLog(@"menu built, adding checkmark");
+    NSLog(@"%@ menu created", [self.fileExtensionList firstObject]);
     [self chooseDefaultPrinter];
+    NSLog(@"%@ menu finished", [self.fileExtensionList firstObject]);
 }
 
 
@@ -99,7 +100,7 @@
 }
 
 -(void)moveCheckmarkTo:(NSString*)newPrinterChoice {
-
+    NSLog(@"adding checkmark");
     [self.submenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
         if ([item.title isEqualToString:newPrinterChoice]) {
             [item setState:NSOnState];
@@ -113,13 +114,17 @@
     __block NSMenuItem *chosenMenuItem;
     
     if (self.printerName) {
+        NSLog(@"searching %lu printers for '%@'", self.submenu.itemArray.count, self.printerName);
         [self.submenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
             if ([item.title rangeOfString:self.printerName options:NSCaseInsensitiveSearch].length>0) {
                 chosenMenuItem = item;
             }
         }];
+    } else {
+        NSLog(@"ERROR: failed to get printer name");
     }
     if (chosenMenuItem) {
+        NSLog(@"selected: %@", chosenMenuItem.title);
         [self moveCheckmarkTo:chosenMenuItem.title];
         [self setPrinterName:chosenMenuItem.title];
     }

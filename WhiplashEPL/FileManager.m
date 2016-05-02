@@ -38,7 +38,7 @@
 #pragma mark - NSCoding
 -(void)savePreferences {
     if (self.watchedFolders) {
-        NSLog(@"SAVING: %@", self.watchedFolders);
+        NSLog(@"saving preferences: %@", [[self.watchedFolders firstObject] url]);
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.watchedFolders];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"watchedFolders"];
     } else {
@@ -50,7 +50,9 @@
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"watchedFolders"];
     if (data) {
         self.watchedFolders = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        NSLog(@"LOADED: %@", self.watchedFolders);
+        for (Folder *folder in self.watchedFolders) {
+            NSLog(@"watched folder: %@", folder.url);
+        }
     } else {
         NSLog(@"failed to load preferences, creating defaults..");
         [self buildDefaultPreferences];

@@ -39,6 +39,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunchComplete"]) {
         [[FileManager sharedInstance] loadPreferences];
     } else {
+        NSLog(@"first launch");
         [[FileManager sharedInstance] buildDefaultPreferences];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
     }
