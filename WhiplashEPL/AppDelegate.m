@@ -29,6 +29,7 @@
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
     PFMoveToApplicationsFolderIfNecessary();
     [self addToLoginItems];
+    NSLog(@"move & autorun complete");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -37,26 +38,34 @@
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunchComplete"]) {
+        NSLog(@"loading preferences..");
         [[FileManager sharedInstance] loadPreferences];
+        NSLog(@"preferences loaded");
     } else {
-        NSLog(@"first launch");
+        NSLog(@"first launch..");
         [[FileManager sharedInstance] buildDefaultPreferences];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
+        NSLog(@"first launch complete");
     }
     
     // build UI
+    NSLog(@"building menu..");
     NSMenu *menu = [self buildStatusMenu];
+    NSLog(@"populating menu..");
     [self populateMenu:menu];
     
     
     
     
     // start loop
+    NSLog(@"about to start watching folder..");
     [[FolderWatcher sharedInstance] start];
+    NSLog(@"startup complete");
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    NSLog(@"quitting..");
     [[FileManager sharedInstance] savePreferences];
 }
 #pragma mark end standard AppDelegate stuff

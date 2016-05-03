@@ -116,8 +116,12 @@
     if (self.printerName) {
         NSLog(@"searching %lu printers for '%@'", self.submenu.itemArray.count, self.printerName);
         [self.submenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
+            NSLog(@"does '%@' match '%@'?", self.printerName, item.title);
             if ([item.title rangeOfString:self.printerName options:NSCaseInsensitiveSearch].length>0) {
                 chosenMenuItem = item;
+                NSLog(@"yes");
+            } else {
+                NSLog(@"no");
             }
         }];
     } else {
@@ -127,6 +131,8 @@
         NSLog(@"selected: %@", chosenMenuItem.title);
         [self moveCheckmarkTo:chosenMenuItem.title];
         [self setPrinterName:chosenMenuItem.title];
+    } else {
+        NSLog(@"couldn't find desired printer.");
     }
 }
 
