@@ -27,19 +27,28 @@
 
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
-    PFMoveToApplicationsFolderIfNecessary();
-    [self addToLoginItems];
+    [[NSFileManager defaultManager] createFileAtPath:[[FileManager sharedInstance] logPath ] contents:nil attributes:nil];
+    [[FileManager sharedInstance] writeToLog:@"\nSTART"];
+    [[FileManager sharedInstance] writeToLog:[NSString stringWithFormat:@"foo %f", 4.7]];
+//    PFMoveToApplicationsFolderIfNecessary();
+//    [self addToLoginItems];
+    [[FileManager sharedInstance] writeToLog:@"prep complete"];
+    BOOL booboo = WLog(@"param: %@, %@", @"maybe?", @"successs!");
+    NSLog(@"%hhd", booboo);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-//    [[FileManager sharedInstance] deletePreferences];
+    [[FileManager sharedInstance] writeToLog:@"launched"];
+    [[FileManager sharedInstance] deletePreferences];
     
+
+
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunchComplete"]) {
         [[FileManager sharedInstance] loadPreferences];
     } else {
-        NSLog(@"first launch");
+        [[FileManager sharedInstance] writeToLog:@"first launch"];
         [[FileManager sharedInstance] buildDefaultPreferences];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunchComplete"];
     }

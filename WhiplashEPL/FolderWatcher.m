@@ -70,7 +70,7 @@
 
 -(void)checkFolderStatus
 {
-    NSLog(@"checking...");
+    [[FileManager sharedInstance] writeToLog:@"checking..."];
 //    [[FileManager sharedInstance] writeToLog:@"checking"];
     
     

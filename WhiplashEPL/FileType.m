@@ -56,7 +56,12 @@
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:self.fileExtensionList forKey:@"fileExtensionList"];
-    [encoder encodeObject:self.printerName forKey:@"printerName"];
+    NSLog(@"about to crash? printer_name: %@", self.printerName);
+    if (self.printerName.length > 1) {
+        [encoder encodeObject:self.printerName forKey:@"printerName"];
+    } else {
+        NSLog(@"skip encoding to avoid empty-printer crash");
+    }
 }
 
 -(NSString*)title {
@@ -121,7 +126,7 @@
             }
         }];
     } else {
-        NSLog(@"ERROR: failed to get printer name");
+        [[FileManager sharedInstance] writeToLog:@"ERROR: failed to get printer name"];
     }
     if (chosenMenuItem) {
         NSLog(@"selected: %@", chosenMenuItem.title);

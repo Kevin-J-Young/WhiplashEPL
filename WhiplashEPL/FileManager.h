@@ -13,6 +13,7 @@
 }
 
 @property (nonatomic, strong) NSArray *watchedFolders;
+//@property (nonatomic, strong) NSFileHandle *logHandle;
 
 +(FileManager*)sharedInstance;
 
@@ -22,6 +23,9 @@
 -(void)deletePreferences;
 -(void)buildDefaultPreferences;
 
+-(NSString*)logPath;
 -(void)writeToLog:(NSString*)line;
+
+BOOL WLog(NSString*, ...);
 
 @end

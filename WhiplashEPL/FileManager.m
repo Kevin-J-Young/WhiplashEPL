@@ -16,6 +16,7 @@
 @implementation FileManager
 @synthesize watchedFolders = _watchedFolders;
 
+
 +(FileManager*)sharedInstance {
     static FileManager *_sharedInstance = nil;
     static dispatch_once_t oncePredicate;
@@ -27,10 +28,11 @@
 }
 
 -(NSString*)logPath {
-    NSString *dl = [[self downloadsFolder] stringByExpandingTildeInPath];
-    NSString *path = [dl stringByAppendingString:@"/LOG.txt"];
-    
-    return path;
+//    NSString *dl = [[self downloadsFolder] stringByExpandingTildeInPath];
+//    NSString *path = [dl stringByAppendingString:@"/LOG.txt"];
+//    
+//    return path;
+    return [@"~/Library/Logs/WhiplashEPL.log" stringByExpandingTildeInPath];
 }
 
 
@@ -42,7 +44,7 @@
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.watchedFolders];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"watchedFolders"];
     } else {
-        NSLog(@"couldn't find anything to save");
+        [[FileManager sharedInstance] writeToLog:@"couldn't find anything to save"];
     }
 }
 
@@ -54,21 +56,21 @@
             NSLog(@"watched folder: %@", folder.url);
         }
     } else {
-        NSLog(@"failed to load preferences, creating defaults..");
+        [[FileManager sharedInstance] writeToLog:@"failed to load preferences, creating defaults.."];
         [self buildDefaultPreferences];
         [self savePreferences];
     }
 }
 
 - (void)deletePreferences {
-    NSLog(@"deleting preferences to start fresh");
+    [[FileManager sharedInstance] writeToLog:@"deleting preferences to start fresh"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunchComplete"];
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 -(void)buildDefaultPreferences {
-    NSLog(@"building default preferences");
+    [[FileManager sharedInstance] writeToLog:@"building default preferences"];
     FileType *epl = [FileType withTypelist:@[@"EPL2", @"epl"] andPrinterName:@"zebra"];
     FileType *pdf = [FileType withTypelist:@[@"pdf"] andPrinterName:@"choose Printer"];
 
@@ -92,12 +94,53 @@
 
 
 #pragma mark - logFile
+BOOL WLog(NSString* formatString, ...) {
+    va_list args;
+    va_start(args, formatString);
+    NSString *line = [[NSString alloc] initWithFormat:formatString arguments:args];
+//    [[FileManager sharedInstance] writeToLog:line];
+    va_end(args);
+    
+    
+    
+    NSString *path = [@"~/Library/Logs/WhiplashEPL.log" stringByExpandingTildeInPath];
+    NSLog(@"%@", path);
+    
+    
+    line = [NSString stringWithFormat:@"%@\n", line];
+    BOOL result = YES;
+    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    if ( !fh ) {
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
+        fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    }
+    if ( !fh ) return NO;
+    @try {
+        [fh seekToEndOfFile];
+        [fh writeData:[line dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    @catch (NSException * e) {
+        result = NO;
+    }
+    [fh closeFile];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    NSLog(@"%@", line);
+    
+    return result;
+}
+
 -(void)writeToLog:(NSString*)line {
     [self appendLine:line ToFile:self.logPath encoding:NSUTF8StringEncoding];
 }
-
-
-
 
 - (BOOL)appendLine:(NSString*)line ToFile:(NSString *)path encoding:(NSStringEncoding)enc;
 {
