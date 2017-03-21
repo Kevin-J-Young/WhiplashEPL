@@ -116,7 +116,7 @@
 }
 
 -(void)chooseDefaultPrinter {
-    __block NSMenuItem *chosenMenuItem;
+    __block NSMenuItem *chosenMenuItem = nil;
     
     if (self.printerName) {
         NSLog(@"searching %lu printers for '%@'", self.submenu.itemArray.count, self.printerName);
