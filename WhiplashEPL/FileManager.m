@@ -79,7 +79,7 @@
 }
 
 -(NSString*)downloadsFolder {
-    NSString *downloadsDirectory;
+    NSString *downloadsDirectory = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, NO);
     if ([paths count] > 0) {
         downloadsDirectory = [paths objectAtIndex:0];

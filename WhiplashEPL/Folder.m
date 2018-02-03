@@ -127,7 +127,7 @@
     
     // Display the dialog.  If the OK button was pressed,
     // process the files.
-    NSURL* dir;
+    NSURL* dir = nil;
     if ( [openDlg runModal] == NSModalResponseOK )
     {
         // Get directory selected
