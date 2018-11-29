@@ -79,25 +79,32 @@
 //    NSString *logStr = [NSString stringWithFormat:@"%@ - %@", filePath, printerName];
 //    [[FileManager sharedInstance] writeToLog:logStr];
     
+    
+    BOOL print_raw = TRUE;
+    NSString *extention = [[filePath lastPathComponent] pathExtension];
+    
+    if ([[extention lowercaseString] isEqualToString:@"pdf"]) {
+        print_raw = FALSE;
+    }
+    NSLog(@"extention: %@, raw? %hhd", extention, print_raw);
+    
     if ([printerName isEqualToString:@"choose Printer"]) {
         [self showNotificationWithTitle:@"PRINT" andDetails:filePath];
         [self trashFile:filePath];
     } else {
         NSLog(@"Printing %@ to %@", filePath, printerName);
-//        [[FileManager sharedInstance] writeToLog:@"printing now?"];
         NSPipe *pipe = [NSPipe pipe];
         
         NSTask *task = [[NSTask alloc] init];
-//        [[FileManager sharedInstance] writeToLog:@"created task"];
         task.launchPath = @"/usr/bin/lpr";
-        task.arguments = @[@"-P", printerName, @"-lr", filePath];
+        if (print_raw) {
+            task.arguments = @[@"-P", printerName, @"-lr", filePath];
+        } else {
+            task.arguments = @[@"-P", printerName, @"-r", filePath];
+        }
+
         task.standardOutput = pipe;
-//        [[FileManager sharedInstance] writeToLog:@"NOT adding termination handler..."];
-//        task.terminationHandler = ^(NSTask *aTask){
-//            NSLog(@"print job complete, deleting file");
-//            [[FileManager sharedInstance] writeToLog:@"print job complete, deleting file?"];
-////            [self trashFile:filePath];
-//        };
+
         
         
         
