@@ -17,6 +17,7 @@
 		D44152241B97A9BA001BE7D9 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = D44152231B97A9BA001BE7D9 /* Folder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D44152271B97AA65001BE7D9 /* FileType.m in Sources */ = {isa = PBXBuildFile; fileRef = D44152261B97AA65001BE7D9 /* FileType.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D441522D1B97D98A001BE7D9 /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D441522C1B97D98A001BE7D9 /* FileManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D4A7079521B0B1EA000C696E /* LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A7079421B0B1EA000C696E /* LoginItem.m */; };
 		D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AEAB571B951AC200835CCB /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D4C3806A1B950ACA00A431AE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D4C380691B950ACA00A431AE /* LICENSE */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,8 @@
 		D441522B1B97D98A001BE7D9 /* FileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
 		D441522C1B97D98A001BE7D9 /* FileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManager.m; sourceTree = "<group>"; };
 		D49AD52C21B083A2005F4544 /* WhiplashEPL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhiplashEPL.entitlements; sourceTree = "<group>"; };
+		D4A7079321B0B1EA000C696E /* LoginItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginItem.h; sourceTree = "<group>"; };
+		D4A7079421B0B1EA000C696E /* LoginItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginItem.m; sourceTree = "<group>"; };
 		D4AEAB561B951AC200835CCB /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
 		D4AEAB571B951AC200835CCB /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
 		D4C380691B950ACA00A431AE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -101,6 +104,8 @@
 				D49AD52C21B083A2005F4544 /* WhiplashEPL.entitlements */,
 				D4086C5E1B90FBAD00836704 /* AppDelegate.h */,
 				D4086C5F1B90FBAD00836704 /* AppDelegate.m */,
+				D4A7079321B0B1EA000C696E /* LoginItem.h */,
+				D4A7079421B0B1EA000C696E /* LoginItem.m */,
 				D44152221B97A9BA001BE7D9 /* Folder.h */,
 				D44152231B97A9BA001BE7D9 /* Folder.m */,
 				D44152251B97AA65001BE7D9 /* FileType.h */,
@@ -258,6 +263,7 @@
 				D44152271B97AA65001BE7D9 /* FileType.m in Sources */,
 				D4AEAB581B951AC200835CCB /* PFMoveApplication.m in Sources */,
 				D4086C841B91078500836704 /* PrintManager.m in Sources */,
+				D4A7079521B0B1EA000C696E /* LoginItem.m in Sources */,
 				D4086C601B90FBAD00836704 /* AppDelegate.m in Sources */,
 				D441522D1B97D98A001BE7D9 /* FileManager.m in Sources */,
 			);

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "PFMoveApplication.h"
+#import "LoginItem.h"
 #import "FileManager.h"
 #import "FolderWatcher.h"
 
@@ -28,7 +29,8 @@
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
     PFMoveToApplicationsFolderIfNecessary();
-    [self addToLoginItems];
+    [[[LoginItem alloc] init] addAppAsLoginItem];
+    
     NSLog(@"move & autorun complete");
 }
 
@@ -69,25 +71,6 @@
     [[FileManager sharedInstance] savePreferences];
 }
 #pragma mark end standard AppDelegate stuff
-
-
-
-
-
-
-
-
-
-
--(void)addToLoginItems {
-    // Get the path of the app
-    NSURL *bundleURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    NSLog(@"%@", bundleURL);
-    // Get the list you want to add the path to
-    LSSharedFileListRef loginItemsListRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    // Add the item to the list
-    LSSharedFileListInsertItemURL(loginItemsListRef, kLSSharedFileListItemLast, NULL, NULL, (__bridge CFURLRef)bundleURL, NULL, NULL);
-}
 
 
 
