@@ -105,8 +105,6 @@
 
 
 -(void)populateMenu:(NSMenu*)menu {
-    
-        
     NSArray *folders = [[FileManager sharedInstance] watchedFolders];
     [folders enumerateObjectsUsingBlock:^(Folder *folder, NSUInteger idx, BOOL *stop) {
         [folder addToMenu:menu];

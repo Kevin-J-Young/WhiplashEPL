@@ -52,6 +52,7 @@
 		D44152261B97AA65001BE7D9 /* FileType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileType.m; sourceTree = "<group>"; };
 		D441522B1B97D98A001BE7D9 /* FileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
 		D441522C1B97D98A001BE7D9 /* FileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManager.m; sourceTree = "<group>"; };
+		D49AD52C21B083A2005F4544 /* WhiplashEPL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhiplashEPL.entitlements; sourceTree = "<group>"; };
 		D4AEAB561B951AC200835CCB /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
 		D4AEAB571B951AC200835CCB /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
 		D4C380691B950ACA00A431AE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		D4086C5B1B90FBAD00836704 /* WhiplashEPL */ = {
 			isa = PBXGroup;
 			children = (
+				D49AD52C21B083A2005F4544 /* WhiplashEPL.entitlements */,
 				D4086C5E1B90FBAD00836704 /* AppDelegate.h */,
 				D4086C5F1B90FBAD00836704 /* AppDelegate.m */,
 				D44152221B97A9BA001BE7D9 /* Folder.h */,
@@ -194,7 +196,12 @@
 					D4086C581B90FBAD00836704 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5YVKDCGMLJ;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+						};
 					};
 					D4086C6B1B90FBAD00836704 = {
 						CreatedOnToolsVersion = 6.4;
@@ -391,16 +398,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YVKDCGMLJ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.whiplash.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "EPL-iMac-Dev";
 			};
 			name = Debug;
 		};
@@ -408,16 +416,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YVKDCGMLJ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = WhiplashEPL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.whiplash.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "EPL-2k23-2";
 			};
 			name = Release;
 		};

@@ -51,6 +51,9 @@
 }
 
 -(void)addToMenu:(NSMenu*)menu {
+    NSString *version_string = [NSString stringWithFormat:@"v%@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    [menu addItemWithTitle:version_string action:nil keyEquivalent:@""];
+    
     [menu insertItem:self atIndex:menu.numberOfItems];
     [[menu insertItemWithTitle:@"New File Type..." action:@selector(addFileType) keyEquivalent:@"" atIndex:menu.numberOfItems] setTarget:self];
     
